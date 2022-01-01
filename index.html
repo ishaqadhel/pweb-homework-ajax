@@ -7,7 +7,7 @@
         <title>PWEB D - AJAX</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
+    <body onload="getProvince()">
         <div
             class="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24"
         >
@@ -96,16 +96,21 @@
                         <div class="sm:col-span-2">
                             <button
                                 type="submit"
-                                onclick="getdata('data.html', 'resultPlaceHtml')"
+                                onclick="getData('data.html', 'resultPlaceHtml')"
                                 class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 Get Data From HTML
                             </button>
                         </div>
                         <div class="sm:col-span-2">
-                            <label for="listBook" class="block text-sm font-medium text-gray-700">List Kabupaten Kota</label>
-                            <select id="listBook" name="listBook" class="bg-white mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" type="text">
-                                <option value="1">1</option>
+                            <label for="province" class="block text-sm font-medium text-gray-700">Province</label>
+                            <select id="province" name="province" onchange="getCity(document.getElementById('province').value)" class="bg-white mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" type="text">
+                            </select>
+                          </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                            <select id="city" name="city" class="bg-white mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" type="text">
                             </select>
                           </div>
                         </div>
@@ -123,7 +128,7 @@
             XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHttp");
         }
 
-        function getdata(url, resultPlaceHtml) {
+        function getData(url, resultPlaceHtml) {
             if (XMLHttpRequestObject) {
                 var obj = document.getElementById(resultPlaceHtml);
                 XMLHttpRequestObject.open("GET", url);
@@ -135,6 +140,41 @@
 
                 XMLHttpRequestObject.send(null);
             }
+        }
+
+        function getProvince() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                const myObj = JSON.parse(this.responseText);
+                let html = "<option>Choose Province</option>";
+                let idx = 0;
+                for (let x of Object.keys(myObj)) {
+                    html += "<option";
+                    html += ` value='${idx}'>`;
+                    html += x;
+                    html += "</option>";
+                    idx += 1;
+                }
+                document.getElementById("province").innerHTML = html;
+            }
+            xhttp.open("GET", "data.json", true);
+            xhttp.send();
+        }
+
+        function getCity(idx) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() {
+                const myObj = JSON.parse(this.responseText);
+                let html = "<option>Choose City</option>";
+                for (let x of Object.values(myObj)[idx]) {
+                    html += "<option>";
+                    html += x;
+                    html += "</option>";
+                }
+                document.getElementById("city").innerHTML = html;
+            }
+            xhttp.open("GET", "data.json", true);
+            xhttp.send();
         }
     </script>
 </html>

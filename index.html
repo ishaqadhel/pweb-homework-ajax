@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PWEB D - AJAX</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <div
+            class="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24"
+        >
+            <div class="relative max-w-xl mx-auto">
+                <svg
+                    class="absolute left-full transform translate-x-1/2"
+                    width="404"
+                    height="404"
+                    fill="none"
+                    viewBox="0 0 404 404"
+                    aria-hidden="true"
+                >
+                    <defs>
+                        <pattern
+                            id="85737c0e-0916-41d7-917f-596dc7edfa27"
+                            x="0"
+                            y="0"
+                            width="20"
+                            height="20"
+                            patternUnits="userSpaceOnUse"
+                        >
+                            <rect
+                                x="0"
+                                y="0"
+                                width="4"
+                                height="4"
+                                class="text-gray-200"
+                                fill="currentColor"
+                            />
+                        </pattern>
+                    </defs>
+                    <rect
+                        width="404"
+                        height="404"
+                        fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)"
+                    />
+                </svg>
+                <svg
+                    class="absolute right-full bottom-0 transform -translate-x-1/2"
+                    width="404"
+                    height="404"
+                    fill="none"
+                    viewBox="0 0 404 404"
+                    aria-hidden="true"
+                >
+                    <defs>
+                        <pattern
+                            id="85737c0e-0916-41d7-917f-596dc7edfa27"
+                            x="0"
+                            y="0"
+                            width="20"
+                            height="20"
+                            patternUnits="userSpaceOnUse"
+                        >
+                            <rect
+                                x="0"
+                                y="0"
+                                width="4"
+                                height="4"
+                                class="text-gray-200"
+                                fill="currentColor"
+                            />
+                        </pattern>
+                    </defs>
+                    <rect
+                        width="404"
+                        height="404"
+                        fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)"
+                    />
+                </svg>
+                <div class="text-center">
+                    <h2
+                        class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl"
+                    >
+                        AJAX
+                    </h2>
+                    <p class="mt-4 text-lg leading-6 text-gray-500">
+                        Ishaq Adheltyo - 05111940000167 - PWEB D
+                    </p>
+                </div>
+                <div class="mt-12">
+                    <div
+                        class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
+                    >
+                        <div class="my-3" id='resultPlaceHtml'></div>
+                        <div class="sm:col-span-2">
+                            <button
+                                type="submit"
+                                onclick="getdata('data.html', 'resultPlaceHtml')"
+                                class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Get Data From HTML
+                            </button>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="listBook" class="block text-sm font-medium text-gray-700">List Kabupaten Kota</label>
+                            <select id="listBook" name="listBook" class="bg-white mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" type="text">
+                                <option value="1">1</option>
+                            </select>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script language="javascript">
+        var XMLHttpRequestObject = false;
+        if (window.XMLHttpRequest) {
+            XMLHttpRequestObject = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHttp");
+        }
+
+        function getdata(url, resultPlaceHtml) {
+            if (XMLHttpRequestObject) {
+                var obj = document.getElementById(resultPlaceHtml);
+                XMLHttpRequestObject.open("GET", url);
+                XMLHttpRequestObject.onreadystatechange = function() {
+                    if (XMLHttpRequestObject.readyState == 4 && XMLHttpRequestObject.status == 200) {
+                        obj.innerHTML = XMLHttpRequestObject.responseText;
+                    }
+                }
+
+                XMLHttpRequestObject.send(null);
+            }
+        }
+    </script>
+</html>
